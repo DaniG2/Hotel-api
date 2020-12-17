@@ -70,3 +70,9 @@ def get_user(username: str):
 def update_user(user_in_db: UserInDB):
     database_users[user_in_db.username] = user_in_db
     return user_in_db
+
+def post_user(username:str):
+    if username in database_users.keys():
+        return database_users[username].password
+    else:
+        return None

@@ -13,3 +13,7 @@ class UserOut(BaseModel):
     firstname: str
     lastName: str
     phone: str
+
+class LogIn(BaseModel):
+    username: str
+    password: str
