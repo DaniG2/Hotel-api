@@ -8,6 +8,8 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from starlette.middleware import Middleware
+
+
 from starlette.middleware.cors import CORSMiddleware
 
 origins = [
@@ -22,6 +24,18 @@ middleware = [Middleware(
 
 api = FastAPI(middleware=middleware)
 
+@api.post("/user/login/")
+async def auth_user(user_in: UserIn):
+
+    user_in_db = get_user(user_in.username)
+
+    if user_in_db == None:
+        raise HTTPException(status_code=404, detail="El usuario no existe")
+
+    if user_in_db.password != user_in.password:
+        return  {"Autenticado": False}
+
+    return  {"Autenticado": True}
 
 @api.get("/user/perfil/{username}")
 async def get_phone(username: str):
